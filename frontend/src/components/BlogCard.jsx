@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const BlogCard = ({ blog }) => {
   return (
     <Link to={`/blog/${blog._id}`}>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition sm:max-w-sm mx-auto">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out sm:max-w-sm mx-auto">
         <img
           src={blog.imageUrl || '/placeholder-image.jpg'}
           alt={blog.title || 'Blog Image'}

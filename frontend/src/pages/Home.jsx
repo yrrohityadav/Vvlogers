@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 
 const Home = () => {
   const [blogs, setBlogs] = useState([])
+  const [searchQuery, setSearchQuery] = useState("")
 
   useEffect(() => {
     // Fetch blogs from API
@@ -18,6 +19,12 @@ const Home = () => {
     }
     fetchBlogs()
   }, [])
+
+  // Filter blogs based on the search query
+  const filteredBlogs = blogs.filter((blog) =>
+    blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    blog.content.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white">
@@ -36,10 +43,24 @@ const Home = () => {
           </Link>
         </div>
 
+        <div className="max-w-3xl mx-auto mb-8">
+          <input
+            type="text"
+            placeholder="Search blogs..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full p-3 rounded-md border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogs.map((blog) => (
-            <BlogCard key={blog._id} blog={blog} />
-          ))}
+          {filteredBlogs.length > 0 ? (
+            filteredBlogs.map((blog) => (
+              <BlogCard key={blog._id} blog={blog} />
+            ))
+          ) : (
+            <p className="text-center text-xl text-gray-600 col-span-full">No blogs found</p>
+          )}
         </div>
       </div>
     </div>
@@ -47,4 +68,3 @@ const Home = () => {
 }
 
 export default Home
-
